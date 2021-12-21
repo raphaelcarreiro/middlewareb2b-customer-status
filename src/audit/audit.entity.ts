@@ -1,9 +1,25 @@
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity('auditoriab2b')
 export class Audit {
-  id:             number;
-  type:           string;
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  type: string;
+
+  @Column()
   distributor_id: number;
-  input:          string;
-  output:         string;
-  output_at:      Date;
-  created_at:     Date;
+
+  @Column()
+  input: string;
+
+  @Column()
+  output: string;
+
+  @Column()
+  output_at: Date;
+
+  @Column({ type: 'timestamp' })
+  created_at: Date;
 }
