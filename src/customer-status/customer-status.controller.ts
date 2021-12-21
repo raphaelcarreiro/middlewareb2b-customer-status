@@ -1,6 +1,6 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { CustomerStatusDto } from './shared/dto/customer-status.dto';
-import { ICustomerStatusService } from './shared/icustomer-status';
+import { CustomerStatusDto } from './shared/dtos/customer-status.dto';
+import { ICustomerStatusService } from './shared/interfaces/customer-status.interface';
 
 @Controller('/customerStatus')
 export class CustomerStatusController {
