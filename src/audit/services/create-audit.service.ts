@@ -1,0 +1,21 @@
+import { InjectRepository } from '@nestjs/typeorm';
+import { Audit } from '../audit.entity';
+import { AuditRepository } from '../audit.repository';
+import { AuditDto } from '../dto/audit.dto';
+import { IAuditRepository } from '../interface/audit.repository.interface';
+
+export class CreateAuditService {
+  constructor(
+    @InjectRepository(AuditRepository)
+    private readonly auditRepository: IAuditRepository,
+  ) {}
+
+  execute(payload: AuditDto): Promise<Audit> {
+    this.validate(payload);
+    return this.auditRepository.store(payload);
+  }
+
+  private validate(payload: AuditDto) {
+    //
+  }
+}

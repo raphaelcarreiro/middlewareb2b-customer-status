@@ -1,4 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
+export enum AuditType {
+  CUSTOMER_STATUS = 'customerStatus',
+  TRACKING = 'tracking',
+}
 
 @Entity('AuditoriaB2B')
 export class Audit {
@@ -8,7 +13,7 @@ export class Audit {
   @Column({
     name: 'Tipo',
   })
-  type: string;
+  type: AuditType;
 
   @Column({
     name: 'Distribuidor',
@@ -27,12 +32,13 @@ export class Audit {
 
   @Column({
     name: 'DataHoraRetorno',
+    nullable: true,
   })
   output_at: Date;
 
-  @Column({
-    type: 'timestamp',
-    name: 'DataHoraRetorno',
+  @CreateDateColumn({
+    name: 'DataHora',
+    nullable: false,
   })
   created_at: Date;
 }

@@ -3,7 +3,7 @@ import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { AuditController } from './audit.controller';
 import { Audit } from './audit.entity';
 import { AuditRepository } from './audit.repository';
-import { AuditService } from './audit.service';
+import { AuditService } from './services/audit.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([AuditRepository, Audit])],
