@@ -5,7 +5,7 @@ import { CustomerStatusController } from './customer-status.controller';
 @Module({
   providers: [
     {
-      provide: 'ICustomerStatus',
+      provide: 'ICustomerStatusService',
       useClass: CustomerStatusService,
     },
   ],
