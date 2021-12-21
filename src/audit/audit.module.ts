@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { AuditController } from './audit.controller';
 import { Audit } from './audit.entity';
 import { AuditRepository } from './audit.repository';
@@ -15,7 +15,7 @@ import { AuditService } from './audit.service';
     },
     {
       provide: 'IAuditRepository',
-      useClass: AuditRepository,
+      useExisting: getRepositoryToken(AuditRepository),
     },
   ],
 })
