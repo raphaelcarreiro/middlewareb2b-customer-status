@@ -1,6 +1,6 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { CustomerStatusDto } from './shared/dtos/customer-status.dto';
 import { ICustomerStatusService } from './shared/interfaces/customer-status.interface';
+import { XmlToJsonParser } from 'src/helpers/xml-json-parser.helper';
 
 @Controller('/customerStatus')
 export class CustomerStatusController {
@@ -10,7 +10,12 @@ export class CustomerStatusController {
   ) {}
 
   @Post()
-  approve(@Body() customerStatus: CustomerStatusDto) {
-    console.log(customerStatus);
+  approve(@Body() customerStatus: string) {
+    return this.parse(customerStatus);
+  }
+
+  private parse(xml: string) {
+    const parser = new XmlToJsonParser(xml);
+    return parser.handle();
   }
 }

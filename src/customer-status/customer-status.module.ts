@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { CustomerStatusService } from './customer-status.service';
 import { CustomerStatusController } from './customer-status.controller';
-import { XmlBodyMiddleware } from 'src/http/middleware/xml-body.middleware';
+import { raw } from 'body-parser';
 
 @Module({
   providers: [
@@ -14,6 +14,6 @@ import { XmlBodyMiddleware } from 'src/http/middleware/xml-body.middleware';
 })
 export class CustomerStatusModule {
   public configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(XmlBodyMiddleware).forRoutes('customerStatus');
+    consumer.apply(raw({ type: 'application/xml' })).forRoutes('customerStatus');
   }
 }
