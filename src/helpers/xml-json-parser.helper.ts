@@ -1,24 +1,29 @@
-import { xml2js } from 'xml-js';
+import { Element, ElementCompact, xml2js } from 'xml-js';
 
 export class XmlToJsonParser {
   constructor(private xml: string) {}
+
+  handle() {
+    const json = this.parse();
+
+    return this.sanitizeJson(json);
+  }
+
+  private sanitizeJson(value: Element | ElementCompact) {
+    const string = JSON.stringify(value)
+      .replace(/(?<=")[A-z0-9]+:/g, '')
+      .toLowerCase();
+
+    const parsed = JSON.parse(string);
+
+    return parsed?.envelope?.body;
+  }
 
   private parse() {
     return xml2js(this.xml, {
       compact: true,
       textFn: this.removeJsonTextAttribute,
     });
-  }
-
-  handle() {
-    const json = this.parse();
-
-    const string = JSON.stringify(json)
-      .replace(/(?<=")[A-z0-9]+:/g, '')
-      .toLowerCase();
-    const parsed = JSON.parse(string);
-
-    return parsed.envelope.body;
   }
 
   private removeJsonTextAttribute(value: string, parentElement) {
