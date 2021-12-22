@@ -1,11 +1,11 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum AuditType {
   CUSTOMER_STATUS = 'customerStatus',
   TRACKING = 'tracking',
 }
 
-@Entity('AuditoriaB2B')
+@Entity()
 export class Audit {
   @PrimaryGeneratedColumn()
   id: number;
@@ -27,6 +27,7 @@ export class Audit {
 
   @Column({
     name: 'Retorno',
+    nullable: true,
   })
   output: string;
 
@@ -37,8 +38,19 @@ export class Audit {
   output_at: Date;
 
   @CreateDateColumn({
+    type: 'timestamp',
     name: 'DataHora',
-    nullable: false,
   })
   created_at: Date;
+
+  @BeforeInsert()
+  beforeInsertActions() {
+    if (!this.type) {
+      this.type = AuditType.CUSTOMER_STATUS;
+    }
+
+    if (!this.created_at) {
+      this.created_at = new Date();
+    }
+  }
 }

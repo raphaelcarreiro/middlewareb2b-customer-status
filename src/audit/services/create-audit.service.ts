@@ -12,6 +12,7 @@ export class CreateAuditService {
 
   execute(payload: AuditDto): Promise<Audit> {
     this.validate(payload);
+
     return this.auditRepository.store(payload);
   }
 

@@ -11,6 +11,6 @@ export class CustomerStatusController {
 
   @Post()
   approve(@Body() customerStatus: CustomerStatusDto) {
-    //
+    console.log(customerStatus);
   }
 }

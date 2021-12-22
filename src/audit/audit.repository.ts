@@ -25,6 +25,8 @@ export class AuditRepository extends Repository<Audit> implements IAuditReposito
 
     await this.save(audit);
 
+    console.log(audit);
+
     return audit;
   }
 }
