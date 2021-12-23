@@ -30,6 +30,7 @@
     "@types/express-xml-bodyparser": "^0.3.2",
     "date-fns": "^2.27.0",
     "express-xml-bodyparser": "^0.3.0",
+    "kafkajs": "^1.15.0",
     "mariadb": "^2.5.5",
     "mysql2": "^2.3.3",
     "reflect-metadata": "^0.1.13",

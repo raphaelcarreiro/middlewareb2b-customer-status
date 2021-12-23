@@ -5,7 +5,7 @@ export enum AuditType {
   TRACKING = 'tracking',
 }
 
-@Entity()
+@Entity('audit')
 export class Audit {
   @PrimaryGeneratedColumn()
   id: number;

@@ -18,5 +18,6 @@ import { AuditService } from './services/audit.service';
       useExisting: getRepositoryToken(AuditRepository),
     },
   ],
+  exports: ['IAuditService'],
 })
 export class AuditModule {}
