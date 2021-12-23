@@ -1,4 +1,3 @@
 export class CustomerStatusDto {
-  customerDocument: string;
-  status: 'apv' | 'rpv';
+  constructor(public customerDocument: string, public status: string) {}
 }
