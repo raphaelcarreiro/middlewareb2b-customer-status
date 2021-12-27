@@ -3,6 +3,7 @@ import { Distributor } from './distributor.entity';
 import { IDistribuidorRepository } from './interfaces/distribuidor.repository.interface';
 import { IDistributorService } from './interfaces/distributor.service.interface';
 import { compareSync } from 'bcrypt';
+import { Crypt } from 'src/common/crypt';
 
 @Injectable()
 export class DistributorService implements IDistributorService {
@@ -11,13 +12,15 @@ export class DistributorService implements IDistributorService {
     private readonly distributorRepository: IDistribuidorRepository,
   ) {}
 
-  async findByUsernameAndPassword(username: string, hashedPassword: string): Promise<Distributor> {
-    const distributor = await this.distributorRepository.findByUsername(username);
-
-    this.comparePassword(distributor.password, hashedPassword);
-
+  async findByUsernameAndPassword(username: string, password: string): Promise<Distributor> {
+    const encodedPassword = this.encodePassword(password);
+    const distributor = await this.distributorRepository.findByUsernameAndPassword(username, encodedPassword);
     return distributor;
   }
+
+  private encodePassword(password: string): string {
+    return new Crypt().encrypt(password);
+  } 
 
   private comparePassword(password: string, hashedPassword: string) {
     const matched = compareSync(password, hashedPassword);
