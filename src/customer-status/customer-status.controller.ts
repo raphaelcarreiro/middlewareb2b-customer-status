@@ -1,7 +1,10 @@
-import { Body, Controller, HttpCode, Inject, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Inject, Post, Req, UseGuards } from '@nestjs/common';
 import { ICustomerStatusService } from './shared/interfaces/customer-status.interface';
 import { XmlToJsonParser } from 'src/helpers/xml-json-parser.helper';
+import { Request } from 'express';
+import { BasicGuard } from 'src/auth/basic.guard';
 
+@UseGuards(BasicGuard)
 @Controller('/customerStatus')
 export class CustomerStatusController {
   constructor(
@@ -11,10 +14,10 @@ export class CustomerStatusController {
 
   @HttpCode(200)
   @Post()
-  approve(@Body() customerStatus: string) {
+  approve(@Body() customerStatus: string, @Req() request: Request) {
     const customerStatusDto = this.parse(customerStatus);
-
-    this.customerStatusService.approve(customerStatusDto);
+    console.log(request);
+    // this.customerStatusService.approve(customerStatusDto);
 
     return 'ok';
   }
