@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Producer } from '@nestjs/microservices/external/kafka.interface';
-import { IAuditService } from 'src/audit/interface/audit.interface';
+import { IAuditService } from '../audit/interface/audit.interface';
 import { CustomerStatusDto } from './shared/dtos/customer-status.dto';
 import { ICustomerStatusService } from './shared/interfaces/customer-status.interface';
 

@@ -29,4 +29,18 @@ export class DistributorRepository extends Repository<Distributor> implements ID
 
     return distribuidor;
   }
+
+  async findByUsername(username: string): Promise<Distributor> {
+    const distributor = await this.findOne({
+      where: {
+        username,
+      },
+    });
+
+    if (!distributor) {
+      throw new HttpException('Distribuidor não encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    return distributor;
+  }
 }
