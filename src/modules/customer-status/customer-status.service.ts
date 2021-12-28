@@ -3,6 +3,7 @@ import { Producer } from '@nestjs/microservices/external/kafka.interface';
 import { IAuditService } from '../audit/interface/audit.interface';
 import { CustomerStatusDto } from './shared/dtos/customer-status.dto';
 import { ICustomerStatusService } from './shared/interfaces/customer-status.interface';
+import { validateOrReject } from 'class-validator';
 
 @Injectable()
 export class CustomerStatusService implements ICustomerStatusService {
@@ -17,13 +18,22 @@ export class CustomerStatusService implements ICustomerStatusService {
   }
 
   async approve(customerStatusDto: CustomerStatusDto): Promise<void> {
-    await this.validate();
+    await this.validate(customerStatusDto);
     this.sendKafkaMessage(customerStatusDto);
     await this.storeAudit(customerStatusDto);
   }
 
-  private async validate() {
-    //
+  private async validate(payload: any) {
+    const customerStatusDto = new CustomerStatusDto();
+
+    customerStatusDto.customerDocument = payload.updatecustomerrequest.customer.documentnr;
+    customerStatusDto.status = payload.updatecustomerrequest.status;
+
+    try {
+      await validateOrReject(customerStatusDto);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   private sendKafkaMessage(customerStatusDto: CustomerStatusDto) {

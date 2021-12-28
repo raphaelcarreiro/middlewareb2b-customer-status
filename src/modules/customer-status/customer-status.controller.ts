@@ -1,7 +1,6 @@
-import { Body, Controller, HttpCode, Inject, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, Inject, Post, UseGuards } from '@nestjs/common';
 import { ICustomerStatusService } from './shared/interfaces/customer-status.interface';
 import { XmlToJsonParser } from 'src/common/xml-json-parser.helper';
-import { Request } from 'express';
 import { BasicGuard } from '../auth/basic.guard';
 
 @UseGuards(BasicGuard)
@@ -14,11 +13,13 @@ export class CustomerStatusController {
 
   @HttpCode(200)
   @Post()
-  approve(@Body() customerStatus: string, @Req() request: Request) {
+  approve(@Body() customerStatus: string) {
     const customerStatusDto = this.parse(customerStatus);
-    // this.customerStatusService.approve(customerStatusDto);
+    this.customerStatusService.approve(customerStatusDto);
 
-    return 'ok';
+    return {
+      status: 'success',
+    };
   }
 
   private parse(xml: string) {
